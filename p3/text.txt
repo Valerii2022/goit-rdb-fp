@@ -1,0 +1,23 @@
+SELECT
+ 
+  code,
+
+  AVG(number_rabies) AS avg_number_rabies,
+    
+  MIN(number_rabies) AS min_number_rabies,
+    
+  MAX(number_rabies) AS max_number_rabies,
+    
+  SUM(number_rabies) AS sum_number_rabies
+
+FROM
+ infectious_cases
+
+WHERE
+ number_rabies IS NOT NULL AND number_rabies != ''
+
+GROUP BY code
+
+ORDER BY avg_number_rabies DESC
+
+LIMIT 10;

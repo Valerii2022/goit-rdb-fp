@@ -1,0 +1,13 @@
+SELECT distinct 
+	
+	year, 
+	
+	(SELECT MAKEDATE(year, 1)) AS makedate,
+    
+	(SELECT CURDATE()) AS current, 
+	
+	(SELECT TIMESTAMPDIFF(YEAR, makedate, current)) AS difference 
+
+FROM infectious_cases
+
+ORDER BY year;
