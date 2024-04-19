@@ -1,31 +1,24 @@
 USE pandemic;
 
-
 CREATE TABLE entities (
-
 id INT AUTO_INCREMENT PRIMARY KEY,
-
 entity TEXT,
-
 code TEXT
-
 );
 
-
-
-ALTER TABLE infectious_cases
-
-ADD COLUMN id INT AUTO_INCREMENT PRIMARY KEY;
-
-
-
 INSERT INTO entities (entity, code)
-
 SELECT DISTINCT entity, code FROM infectious_cases;
 
+ALTER TABLE infectious_cases
+ADD COLUMN id INT AUTO_INCREMENT PRIMARY KEY,
+ADD COLUMN entity_id INT;
 
+UPDATE infectious_cases
+JOIN entities ON infectious_cases.entity = entities.entity
+SET infectious_cases.entity_id = entities.id
+WHERE infectious_cases.id > 0;
 
 ALTER TABLE infectious_cases
-
-DROP COLUMN entity;
-
+DROP COLUMN entity,
+DROP COLUMN code,
+ADD FOREIGN KEY (entity_id) REFERENCES entities(id);

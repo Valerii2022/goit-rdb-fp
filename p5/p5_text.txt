@@ -1,0 +1,23 @@
+USE pandemic;
+
+DROP FUNCTION IF EXISTS CreateYearsDifference;
+
+DELIMITER //
+
+CREATE FUNCTION CreateYearsDifference(input_year INT)
+RETURNS BIGINT
+DETERMINISTIC 
+NO SQL
+BEGIN
+    DECLARE makedate DATE;
+    DECLARE current DATE;
+    DECLARE difference BIGINT;
+	SET makedate = MAKEDATE(input_year, 1); 
+	SET current = CURDATE();
+    SET difference =TIMESTAMPDIFF(YEAR, makedate, current);
+    RETURN difference;
+END //
+
+DELIMITER ;
+
+SELECT CreateYearsDifference(1988);
